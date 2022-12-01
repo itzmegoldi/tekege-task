@@ -52,6 +52,7 @@
 <script>
 import RULES from "@/common/fieldRules";
 import { ROUTER_URL } from "@/constant/urls";
+import apiUrl from "@/constant/apiUrls";
 export default {
   name: "Login",
   components: {},
@@ -62,7 +63,7 @@ export default {
       password: "",
       showPassword: false,
       formLoading: false,
-      requestUrl: "https://qa5.devaavaz.biz/361-api/v3/users/auth",
+      requestUrl: "users/auth",
     };
   },
   computed: {},
@@ -77,7 +78,7 @@ export default {
         headers["Content-Type"] = "application/json;charset=UTF-8";
         headers["Authorization"] = basicAuthCredentials;
         this.authAxios
-          .post(this.requestUrl, {}, { headers: headers })
+          .post(apiUrl.AUTH_URL, {}, { headers: headers })
           .then((res) => {
             console.log(res, "success res");
             this.formLoading = false;

@@ -12,7 +12,8 @@ const authToken = {
   tokenHeader: () => {
     let headers = {};
     headers["Content-Type"] = "application/json;charset=UTF-8";
-    headers["Authorization"] = `Basic ${authToken.getToken()}:`;
+    let encriptedToken = btoa(authToken.getToken() + ":x");
+    headers["Authorization"] = `Basic ${encriptedToken}`;
     return headers;
   },
   logoutHandler: () => {

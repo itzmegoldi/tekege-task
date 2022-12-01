@@ -9,6 +9,8 @@ import authToken from "./common/authToken";
 
 Vue.config.productionTip = false;
 
+axios.defaults.baseURL = "https://qa5.devaavaz.biz/361-api/v3/";
+
 Vue.prototype.authAxios = axios;
 Vue.prototype.tokenAxios = axios.create({
   headers: authToken.tokenHeader(),
