@@ -81,6 +81,7 @@
     <v-main style="background-color: #f7f7f7 !important; min-height: 100vh">
       <router-view />
     </v-main>
+    <user-modal></user-modal>
   </div>
 </template>
 <script>
@@ -88,6 +89,9 @@ import authToken from "@/common/authToken";
 import { ROUTER_URL } from "@/constant/urls";
 export default {
   name: "TaskLayout",
+  components: {
+    UserModal: () => import("@/components/Users/UserModal/UserModal.vue"),
+  },
   data() {
     return {
       drawer: true,

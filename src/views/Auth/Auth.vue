@@ -53,6 +53,7 @@
 import RULES from "@/common/fieldRules";
 import { ROUTER_URL } from "@/constant/urls";
 import apiUrl from "@/constant/apiUrls";
+import authToken from "@/common/authToken";
 export default {
   name: "Login",
   components: {},
@@ -90,6 +91,7 @@ export default {
           })
           .catch((error) => {
             console.log(error, "error");
+            authToken.errorHandler(error);
             this.formLoading = false;
           });
       }
