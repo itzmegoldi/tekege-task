@@ -54,6 +54,7 @@
             <v-btn
               text
               style="padding: 0 0 0px !important; min-width: 0px !important"
+              @click="deleteUser(props.item.id)"
             >
               <v-icon>mdi-delete</v-icon>
             </v-btn>
@@ -138,6 +139,7 @@ export default {
   methods: {
     ...mapActions({
       toggleUserModal: "users/toggleUserModal",
+      showToast: "snackBar/showToast",
     }),
     getUsers() {
       this.loading = true;
@@ -156,8 +158,24 @@ export default {
         })
         .catch((error) => {
           console.log(error);
-          authToken.errorHandler(error);
+          authToken.errorHandler(error.response);
           this.loading = false;
+        });
+    },
+    deleteUser(id) {
+      this.tokenAxios
+        .put(`${apiUrl.USERS_API}${id}/toggle_active`)
+        .then((res) => {
+          console.log(res);
+          this.showToast({
+            message: "User Deleted",
+            color: "s",
+          });
+          this.getUser();
+        })
+        .catch((error) => {
+          console.log(error);
+          authToken.errorHandler(error.response);
         });
     },
   },

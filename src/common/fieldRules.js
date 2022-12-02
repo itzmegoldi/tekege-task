@@ -19,4 +19,20 @@ export default {
     }
     return "Invalid Email";
   },
+  phone: (v) => {
+    const re = /^(\+91)?[0]?(91)?[6789]\d{9}$/;
+    if (re.test(v)) {
+      return true;
+    }
+    return "Invalid Phone Number";
+  },
+  phone_optional: (v) => {
+    const re = /^(\+91)?[0]?(91)?[6789]\d{9}$/;
+    if (v === null || v === "") {
+      return true;
+    } else if (re.test(v)) {
+      return true;
+    }
+    return "Invalid Phone Number";
+  },
 };

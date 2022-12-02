@@ -82,6 +82,7 @@
       <router-view />
     </v-main>
     <user-modal></user-modal>
+    <skills-modal></skills-modal>
   </div>
 </template>
 <script>
@@ -91,6 +92,8 @@ export default {
   name: "TaskLayout",
   components: {
     UserModal: () => import("@/components/Users/UserModal/UserModal.vue"),
+    SkillsModal: () =>
+      import("@/components/Skills/SkillsModal/SkillsModal.vue"),
   },
   data() {
     return {

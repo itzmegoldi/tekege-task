@@ -21,11 +21,28 @@
       <template v-slot:top>
         <v-row>
           <v-col cols="12" class="d-flex justify-end px-6 pb-6">
-            <v-btn color="#EF233C" class="text-capitalize btn px-7">
+            <v-btn
+              color="#EF233C"
+              class="text-capitalize btn px-7"
+              @click="toggleSkillsModal({ show: true })"
+            >
               add skills
             </v-btn>
           </v-col>
         </v-row>
+      </template>
+      <template v-slot:item="props">
+        <tr>
+          <td class="text-center">
+            <div class="title">{{ props.item.name }}</div>
+          </td>
+          <td class="text-center">
+            <div class="title">{{ props.item.description }}</div>
+          </td>
+          <td class="text-center">
+            <div class="title">{{ props.item.category_id }}</div>
+          </td>
+        </tr>
       </template>
       <template v-slot:footer>
         <v-row>
@@ -75,6 +92,7 @@
 import apiUrl from "@/constant/apiUrls";
 import authToken from "@/common/authToken";
 import tableHeaders from "@/common/tableHeaders";
+import { mapActions } from "vuex";
 export default {
   name: "Skills",
   data() {
@@ -86,30 +104,34 @@ export default {
       page_number: 1,
       total_page: 1,
       items: [],
-      headers: tableHeaders.userTable,
+      headers: tableHeaders.skillsTable,
     };
   },
   computed: {},
   watch: {},
   methods: {
+    ...mapActions({
+      toggleSkillsModal: "skills/toggleSkillsModal",
+      showToast: "snackBar/showToast",
+    }),
     getSkills() {
       this.loading = true;
       let formData = {};
-      formData["page"] = this.page_number;
-      formData["per_page"] = this.item_per_page;
+      formData["include"] = "categories";
+      formData["query"] = "queue_id:3";
 
       this.tokenAxios
-        .get(apiUrl.USERS_API, { params: formData }, {})
+        .get(apiUrl.SKILLS_API, { params: formData }, {})
         .then((res) => {
           console.log(res);
           this.items = res.data;
-          this.page_number = parseInt(res.headers["x-pagination-page"]);
-          this.total_page = parseInt(res.headers["x-pagination-page-count"]);
+          // this.page_number = parseInt(res.headers["x-pagination-page"]);
+          // this.total_page = parseInt(res.headers["x-pagination-page-count"]);
           this.loading = false;
         })
         .catch((error) => {
           console.log(error);
-          authToken.errorHandler(error);
+          authToken.errorHandler(error.response);
           this.loading = false;
         });
     },
